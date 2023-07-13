@@ -1,5 +1,6 @@
 package com.example.employee.controller.response;
 
+import com.example.employee.modele.Image;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -11,8 +12,10 @@ import java.time.LocalDate;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class EmployeeResnpose {
+public class EmployeeResponse {
+    private String matricule;
     private String firstName;
     private String lastName;
     private LocalDate birthDate;
+    private Image image;
 }
