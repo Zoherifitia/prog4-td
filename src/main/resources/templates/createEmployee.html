@@ -5,7 +5,7 @@
     <title>creer un employee</title>
 </head>
 <body>
-<form action="#" th:action="@{/save-employee}" th:object="${createEmployee}" method="post">
+<form action="#" th:action="@{/save-employee}" th:object="${createEmployee}" method="post" enctype="multipart/form-data">
     <table>
         <tr>
             <td><label/>firstName</td>
@@ -20,9 +20,14 @@
             <td><input type="date" th:field="*{birthDate}"/></td>
         </tr>
         <tr>
+            <td><label for="photoFile">Profile Picture:</label></td>
+            <td><input type="file" id="photoFile" name="photoFile" accept="image/*" /></td>
+        </tr>
+        <tr>
             <td><input type="submit" value="Submit" /></td>
         </tr>
     </table>
+    <a href="/employees" class="btn btn-primary">Liste des employee</a>
 </form>
 </body>
 </html>

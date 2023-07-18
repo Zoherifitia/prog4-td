@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<h2>Fiche Employee</h2>
+<table>
+<tr >
+    <td th:text="${employee.generateMatricule()}" />
+    <td th:text="${employee.firstName}" />
+    <td th:text="${employee.lastName}" />
+    <td th:text="${employee.birthDate}"/>
+</tr>
+</table>
+<img th:src="@{'/employee/' + ${employee.id} + '/image'}" alt="aucune photo" />
+<a href="/employees" class="btn btn-primary">List des employees</a>
+</body>
+</html>

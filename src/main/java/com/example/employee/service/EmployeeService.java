@@ -17,4 +17,10 @@ public class EmployeeService {
     public Employee saveEmployee(Employee employee){
         return employeeRepository.save(employee);
     }
+
+    public Employee getEmployeeById(Integer id) {
+        return employeeRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("L'employé avec l'ID " + id + " n'a pas été trouvé."));
+    }
+
 }

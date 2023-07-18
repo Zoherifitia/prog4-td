@@ -11,11 +11,12 @@ import java.util.Date;
 public class EmployeeMapper {
     public EmployeeResponse toRest(Employee domain){
         return EmployeeResponse.builder()
+                .id(domain.getId())
                 .matricule(domain.generateMatricule())
                 .firstName(domain.getFirstName())
                 .lastName(domain.getLastName())
                 .birthDate(domain.getBirthDate())
-                //.image(domain.getImage())
+                .image(domain.getImage())
                 .build();
     }
 
@@ -25,7 +26,7 @@ public class EmployeeMapper {
         employee1.setFirstName(employee.getFirstName());
         employee1.setLastName(employee.getLastName());
         employee1.setBirthDate(employee.getBirthDate());
-       //. employee1.setImage(employee.getImage());
+        employee1.setImage(employee.getImage());
         return employee1;
     }
 }

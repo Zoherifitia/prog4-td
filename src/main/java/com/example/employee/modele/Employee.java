@@ -21,14 +21,10 @@ public class Employee {
     private String firstName;
     private String lastName;
     private LocalDate birthDate;
-    @OneToOne
-    private Image image;
-
+    private byte[] image;
     public String generateMatricule() {
       String mat = String.format("%05d", id);
       this.matricule= "STD"+mat;
       return matricule;
     }
-
-
 }
