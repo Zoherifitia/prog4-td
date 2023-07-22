@@ -25,7 +25,8 @@ public class CreateEmployeeResponse {
     private Employee.Sex sex;
     private List<Phone> phone;
     private String adress;
-    private Email email;
+    private String emailPro;
+    private String emailPerso;
     private String cinNumber;
     private LocalDate cinDateDelivery;
     private String cinPlaceDelivery;

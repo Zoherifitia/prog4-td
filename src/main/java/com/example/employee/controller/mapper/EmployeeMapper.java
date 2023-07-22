@@ -11,6 +11,7 @@ import org.springframework.stereotype.Component;
 @AllArgsConstructor
 public class EmployeeMapper {
     private CinMapper cinMapper;
+    private EmailMapper emailMapper;
     public EmployeeResponse toRest(Employee domain){
         return EmployeeResponse.builder()
                 .id(domain.getId())
@@ -41,7 +42,7 @@ public class EmployeeMapper {
         employee1.setBirthDate(employee.getBirthDate());
         employee1.setImage(employee.getImage());
         employee1.setSex(employee.getSex());
-        employee1.setEmail(employee.getEmail());
+        employee1.setEmail(emailMapper.toDomain(employee));
         employee1.setAdress(employee.getAdress());
         employee1.setPhone(employee.getPhone());
         employee1.setCin(cinMapper.toDomain(employee));
@@ -62,7 +63,7 @@ public class EmployeeMapper {
         employee2.setBirthDate(employee.getBirthDate());
         employee2.setImage(employee.getImage());
         employee2.setSex(employee.getSex());
-        employee2.setEmail(employee.getEmail());
+        employee2.setEmail(emailMapper.toDomain(employee));
         employee2.setAdress(employee.getAdress());
         employee2.setPhone(employee.getPhone());
         employee2.setCin(cinMapper.toDomain(employee));

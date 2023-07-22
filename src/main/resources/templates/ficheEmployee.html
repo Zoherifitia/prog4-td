@@ -20,7 +20,7 @@
     <td th:text="${employee.arriveDate}"/>
     <td th:text="${employee.departDate}"/>
     <td th:text="${employee.categorieSocioProfessionnelle}"/>
-
+    <td th:text="${employee.email}"/>
 </tr>
 </table>
 <img th:src="@{'/employee/' + ${employee.id} + '/image'}" alt="aucune photo" />

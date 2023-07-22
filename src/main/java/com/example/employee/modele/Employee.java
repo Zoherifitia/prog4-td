@@ -27,7 +27,6 @@ public class Employee {
     //Téléphones : un employé peut avoir plusieurs
     //adresse exacte,
     //email perso et email pro
-    //CIN : numéro, date et lieu de délivrance,
     //fonction au sein de l’entreprise
     private Sex sex;
 
