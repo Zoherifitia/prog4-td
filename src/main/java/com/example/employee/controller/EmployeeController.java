@@ -3,6 +3,7 @@ package com.example.employee.controller;
 import com.example.employee.controller.mapper.EmployeeMapper;
 import com.example.employee.controller.response.CreateEmployeeResponse;
 import com.example.employee.controller.response.EmployeeResponse;
+import com.example.employee.controller.response.UpdateEmployeeResponse;
 import com.example.employee.modele.Employee;
 import com.example.employee.service.EmployeeService;
 import lombok.AllArgsConstructor;
@@ -69,5 +70,23 @@ public class EmployeeController {
         Employee employee = employeeService.getEmployeeById(id);
         model.addAttribute("employee", employee);
         return "ficheEmployee";
+    }
+    @GetMapping("/employee/{id}/edit")
+    public String showEditForm(@PathVariable("id") Integer id, Model model) {
+        Employee employee = employeeService.getEmployeeById(id);
+        model.addAttribute("updateEmployee", employee);
+        return "updateEmployee";
+    }
+    @PostMapping("/employee/{id}/edit")
+    public String submitEditForm(@ModelAttribute("updateEmployee") UpdateEmployeeResponse updateEmployeeResponse,
+                                 @RequestParam("photoFile") MultipartFile photoFile) throws IOException{
+        if(!photoFile.isEmpty()){
+            byte[] imageBytes = photoFile.getBytes();
+            updateEmployeeResponse.setImage(imageBytes);
+        }else {
+            System.out.println("aucune image");
+        }
+        employeeService.updateEmployee(employeeMapper.toDomain(updateEmployeeResponse));
+        return "redirect:/employees";
     }
 }

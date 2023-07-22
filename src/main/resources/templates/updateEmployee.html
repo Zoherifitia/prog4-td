@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Update Employee</title>
+</head>
+<body>
+<form action="#" th:action="@{'/employee/'+${id}+'/edit'}" th:object="${updateEmployee}" method="post" enctype="multipart/form-data">
+    <table>
+        <tr>
+            <td><label/>firstName</td>
+            <td><input type="text" th:field="*{firstName}" /></td>
+        </tr>
+        <tr>
+            <td><label />lastName</td>
+            <td><input type="text" th:field="*{lastName}" /></td>
+        </tr>
+        <tr>
+            <td><label/>Birth Date</td>
+            <td><input type="date" th:field="*{birthDate}"/></td>
+        </tr>
+        <tr>
+            <td><label for="photoFile">Profile Picture:</label></td>
+            <td><input type="file" id="photoFile" name="photoFile" accept="image/*" /></td>
+        </tr>
+        <tr>
+            <td><input type="submit" value="Submit" /></td>
+        </tr>
+    </table>
+    <a href="/employees" class="btn btn-primary">Liste des employee</a>
+</form>
+</body>
+</html>

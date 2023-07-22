@@ -12,6 +12,15 @@
     <td th:text="${employee.firstName}" />
     <td th:text="${employee.lastName}" />
     <td th:text="${employee.birthDate}"/>
+    <td th:text="${employee.sex}"/>
+    <!--<td th:text="${employee.phone}" h/>-->
+    <td th:text="${employee.adress}"/>
+    <td th:text="${employee.cin}"/>
+    <td th:text="${employee.numberOfChildren}"/>
+    <td th:text="${employee.arriveDate}"/>
+    <td th:text="${employee.departDate}"/>
+    <td th:text="${employee.categorieSocioProfessionnelle}"/>
+
 </tr>
 </table>
 <img th:src="@{'/employee/' + ${employee.id} + '/image'}" alt="aucune photo" />

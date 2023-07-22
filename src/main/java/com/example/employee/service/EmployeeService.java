@@ -1,5 +1,6 @@
 package com.example.employee.service;
 
+import com.example.employee.modele.CIN;
 import com.example.employee.modele.Employee;
 import com.example.employee.repository.EmployeeRepository;
 import lombok.AllArgsConstructor;
@@ -11,10 +12,13 @@ import java.util.List;
 @AllArgsConstructor
 public class EmployeeService {
     private EmployeeRepository employeeRepository;
+    private CinService cinService;
     public List<Employee> getEmployee(){
         return employeeRepository.findAll();
     }
     public Employee saveEmployee(Employee employee){
+        CIN cin = cinService.save(employee.getCin());
+        employee.setCin(cin);
         return employeeRepository.save(employee);
     }
 
@@ -22,5 +26,7 @@ public class EmployeeService {
         return employeeRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("L'employé avec l'ID " + id + " n'a pas été trouvé."));
     }
-
+    public Employee updateEmployee(Employee employee){
+        return employeeRepository.save(employee);
+    }
 }

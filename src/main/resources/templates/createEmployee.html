@@ -20,8 +20,61 @@
             <td><input type="date" th:field="*{birthDate}"/></td>
         </tr>
         <tr>
+            <td><label/>Sex</td>
+            <td>
+                <select th:field="*{sex}">
+                    <option th:value="M" th:text="Male"></option>
+                    <option th:value="M" th:text="Female"></option>
+                </select>
+            </td>
+        </tr>
+        <!--<tr>
+            <td><label/>Phone</td>
+            <td><input type="tel" th:field="*{phone}"/></td>
+        </tr>-->
+        <tr>
+            <td><label/>Adress</td>
+            <td><input type="text" th:field="*{adress}"/></td>
+        </tr>
+        <tr>
+            <td><label/>CIN</td>
+            <td><input type="text" th:field="*{cinNumber}"/></td>
+        </tr>
+        <tr>
+            <td><label/>Delivery date</td>
+            <td><input type="date" th:field="*{cinDateDelivery}"></td>
+        </tr>
+        <tr>
+            <td><label/>Place delivery</td>
+            <td><input type="text" th:field="*{cinPlaceDelivery}"></td>
+        </tr>
+        <tr>
+            <td><label/>Children number</td>
+            <td><input type="number" th:field="*{numberOfChildren}"/></td>
+        </tr>
+        <tr>
+            <td><label/>Arrive Date</td>
+            <td><input type="date" th:field="*{arriveDate}"></td>
+        </tr>
+        <tr>
+            <td><label/>Depart Date</td>
+            <td><input type="date" th:field="*{departDate}"/></td>
+        </tr>
+        <tr>
             <td><label for="photoFile">Profile Picture:</label></td>
             <td><input type="file" id="photoFile" name="photoFile" accept="image/*" /></td>
+        </tr>
+        <tr>
+            <td>Categori socio-professionnelle</td>
+            <td>
+                <select th:field="*{categorieSocioProfessionnelle}">
+                    <option th:value="manager" th:text="manager"></option>
+                    <option th:value="employe" th:text="employe"></option>
+                    <option th:value="worker" th:text="worker"></option>
+                    <option th:value="technician" th:text="technician"></option>
+                    <option th:value="unskilled" th:text="unskilled"></option>
+                </select>
+            </td>
         </tr>
         <tr>
             <td><input type="submit" value="Submit" /></td>

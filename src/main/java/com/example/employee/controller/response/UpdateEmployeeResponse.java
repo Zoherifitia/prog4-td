@@ -13,10 +13,11 @@ import java.time.LocalDate;
 import java.util.List;
 
 @AllArgsConstructor
-@Builder
-@Data
 @NoArgsConstructor
-public class CreateEmployeeResponse {
+@Data
+@Builder
+public class UpdateEmployeeResponse {
+    private Integer id;
     private String matricule;
     private String firstName;
     private String lastName;
