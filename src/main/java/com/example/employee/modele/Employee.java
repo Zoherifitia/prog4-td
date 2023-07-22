@@ -27,7 +27,6 @@ public class Employee {
     //Téléphones : un employé peut avoir plusieurs
     //adresse exacte,
     //email perso et email pro
-    //fonction au sein de l’entreprise
     private Sex sex;
 
     @OneToMany
@@ -39,7 +38,7 @@ public class Employee {
     private Email email;
     @OneToOne
     private CIN cin;
-    private String fonction;
+    private String function;
     private Integer numberOfChildren;
     private LocalDate arriveDate;
 

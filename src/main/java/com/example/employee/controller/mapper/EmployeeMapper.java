@@ -25,7 +25,7 @@ public class EmployeeMapper {
                 .adress(domain.getAdress())
                 .phone(domain.getPhone())
                 .cin(domain.getCin())
-                .fonction(domain.getFonction())
+                .function(domain.getFunction())
                 .numberOfChildren(domain.getNumberOfChildren())
                 .arriveDate(domain.getArriveDate())
                 .departDate(domain.getDepartDate())
@@ -46,7 +46,7 @@ public class EmployeeMapper {
         employee1.setAdress(employee.getAdress());
         employee1.setPhone(employee.getPhone());
         employee1.setCin(cinMapper.toDomain(employee));
-        employee1.setFonction(employee.getFonction());
+        employee1.setFunction(employee.getFunction());
         employee1.setNumberOfChildren(employee.getNumberOfChildren());
         employee1.setArriveDate(employee.getArriveDate());
         employee1.setDepartDate(employee.getDepartDate());
@@ -67,7 +67,7 @@ public class EmployeeMapper {
         employee2.setAdress(employee.getAdress());
         employee2.setPhone(employee.getPhone());
         employee2.setCin(cinMapper.toDomain(employee));
-        employee2.setFonction(employee.getFonction());
+        employee2.setFunction(employee.getFunction());
         employee2.setNumberOfChildren(employee.getNumberOfChildren());
         employee2.setArriveDate(employee.getArriveDate());
         employee2.setDepartDate(employee.getDepartDate());

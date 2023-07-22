@@ -31,7 +31,7 @@ public class UpdateEmployeeResponse {
     private String cinNumber;
     private LocalDate cinDateDelivery;
     private String cinPlaceDelivery;
-    private String fonction;
+    private String function;
     private Integer numberOfChildren;
     private LocalDate arriveDate;
     private LocalDate departDate;

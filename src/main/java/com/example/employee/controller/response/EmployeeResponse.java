@@ -31,7 +31,7 @@ public class EmployeeResponse {
     private String adress;
     private Email email;
     private CIN cin;
-    private String fonction;
+    private String function;
     private Integer numberOfChildren;
     private LocalDate arriveDate;
     private LocalDate departDate;
