@@ -25,7 +25,13 @@ public class UpdateEmployeeResponse {
     private byte[] image;
     private Employee.Sex sex;
     private List<Phone> phone;
-    private String adress;
+    private String houseNumber;
+    private String streetName;
+    private String district;
+    private String city;
+    private String postalCode;
+    private String region;
+    private String country;
     private String emailPro;
     private String emailPerso;
     private String cinNumber;

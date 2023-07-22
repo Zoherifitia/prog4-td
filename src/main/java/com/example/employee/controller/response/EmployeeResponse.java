@@ -1,9 +1,6 @@
 package com.example.employee.controller.response;
 
-import com.example.employee.modele.CIN;
-import com.example.employee.modele.Email;
-import com.example.employee.modele.Employee;
-import com.example.employee.modele.Phone;
+import com.example.employee.modele.*;
 import jakarta.persistence.Column;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
@@ -28,7 +25,7 @@ public class EmployeeResponse {
     private byte[] image;
     private Employee.Sex sex;
     private List<Phone> phone;
-    private String adress;
+    private Address address;
     private Email email;
     private CIN cin;
     private String function;

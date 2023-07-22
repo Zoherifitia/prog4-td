@@ -1,5 +1,6 @@
 package com.example.employee.service;
 
+import com.example.employee.modele.Address;
 import com.example.employee.modele.CIN;
 import com.example.employee.modele.Email;
 import com.example.employee.modele.Employee;
@@ -15,6 +16,7 @@ public class EmployeeService {
     private EmployeeRepository employeeRepository;
     private CinService cinService;
     private EmailService emailService;
+    private AddressService addressService;
     public List<Employee> getEmployee(){
         return employeeRepository.findAll();
     }
@@ -23,6 +25,8 @@ public class EmployeeService {
         employee.setCin(cin);
         Email email =emailService.save(employee.getEmail());
         employee.setEmail(email);
+        Address address= addressService.save(employee.getAddress());
+        employee.setAddress(address);
         return employeeRepository.save(employee);
     }
 

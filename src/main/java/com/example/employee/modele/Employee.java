@@ -26,13 +26,13 @@ public class Employee {
 
     //Téléphones : un employé peut avoir plusieurs
     //adresse exacte,
-    //email perso et email pro
     private Sex sex;
 
     @OneToMany
     private List<Phone> phone;
 
-    private String adress;
+    @OneToOne
+    private Address address;
 
     @OneToOne
     private Email email;

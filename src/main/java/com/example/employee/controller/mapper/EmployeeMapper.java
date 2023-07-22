@@ -12,6 +12,7 @@ import org.springframework.stereotype.Component;
 public class EmployeeMapper {
     private CinMapper cinMapper;
     private EmailMapper emailMapper;
+    private AddressMapper addressMapper;
     public EmployeeResponse toRest(Employee domain){
         return EmployeeResponse.builder()
                 .id(domain.getId())
@@ -22,7 +23,7 @@ public class EmployeeMapper {
                 .image(domain.getImage())
                 .sex(domain.getSex())
                 .email(domain.getEmail())
-                .adress(domain.getAdress())
+                .address(domain.getAddress())
                 .phone(domain.getPhone())
                 .cin(domain.getCin())
                 .function(domain.getFunction())
@@ -43,7 +44,7 @@ public class EmployeeMapper {
         employee1.setImage(employee.getImage());
         employee1.setSex(employee.getSex());
         employee1.setEmail(emailMapper.toDomain(employee));
-        employee1.setAdress(employee.getAdress());
+        employee1.setAddress(addressMapper.toDomain(employee));
         employee1.setPhone(employee.getPhone());
         employee1.setCin(cinMapper.toDomain(employee));
         employee1.setFunction(employee.getFunction());
@@ -64,7 +65,7 @@ public class EmployeeMapper {
         employee2.setImage(employee.getImage());
         employee2.setSex(employee.getSex());
         employee2.setEmail(emailMapper.toDomain(employee));
-        employee2.setAdress(employee.getAdress());
+        employee2.setAddress(addressMapper.toDomain(employee));
         employee2.setPhone(employee.getPhone());
         employee2.setCin(cinMapper.toDomain(employee));
         employee2.setFunction(employee.getFunction());
