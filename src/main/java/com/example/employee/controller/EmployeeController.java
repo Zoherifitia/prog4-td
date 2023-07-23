@@ -4,8 +4,7 @@ import com.example.employee.controller.mapper.EmployeeMapper;
 import com.example.employee.controller.response.CreateEmployeeResponse;
 import com.example.employee.controller.response.EmployeeResponse;
 import com.example.employee.controller.response.UpdateEmployeeResponse;
-import com.example.employee.modele.Employee;
-import com.example.employee.modele.Phone;
+import com.example.employee.modele.*;
 import com.example.employee.service.EmployeeService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpHeaders;
@@ -54,7 +53,6 @@ public class EmployeeController {
         List<String> formattedPhones = Arrays.stream(createEmployeeResponse.getPhone().split(","))
                 .map(phone -> "-" + phone)
                 .collect(Collectors.toList());
-
         createEmployeeResponse.setPhone(String.join("<br/>", formattedPhones));
 
         employeeService.saveEmployee(employeeMapper.toDomain(createEmployeeResponse));
@@ -77,6 +75,15 @@ public class EmployeeController {
     @GetMapping("/employee/{id}")
     public String getEmployeeDetails(@PathVariable Integer id, Model model) {
         Employee employee = employeeService.getEmployeeById(id);
+        if (employee.getCin() == null) {
+            employee.setCin(new CIN()); // Créer un nouvel objet Cin s'il est nul
+        }
+        if (employee.getAddress() == null) {
+            employee.setAddress(new Address()); // Créer un nouvel objet Address s'il est nul
+        }
+        if (employee.getEmail() == null) {
+            employee.setEmail(new Email()); // Créer un nouvel objet Email s'il est nul
+        }
         model.addAttribute("employee", employee);
         return "ficheEmployee";
     }
@@ -98,4 +105,6 @@ public class EmployeeController {
         employeeService.updateEmployee(employeeMapper.toDomain(updateEmployeeResponse));
         return "redirect:/employees";
     }
+
+
 }

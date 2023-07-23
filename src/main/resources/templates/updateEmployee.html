@@ -29,22 +29,6 @@
             </td>
         </tr>
         <tr>
-            <td><label/>Adress</td>
-            <td><input type="text" th:field="*{adress}"/></td>
-        </tr>
-        <tr>
-            <td><label/>CIN</td>
-            <td><input type="text" th:field="*{cin.cinNumber}"/></td>
-        </tr>
-        <tr>
-            <td><label/>Delivery date</td>
-            <td><input type="date" th:field="*{cinDateDelivery}"></td>
-        </tr>
-        <tr>
-            <td><label/>Place delivery</td>
-            <td><input type="text" th:field="*{cinPlaceDelivery}"></td>
-        </tr>
-        <tr>
             <td><label/>Children number</td>
             <td><input type="number" th:field="*{numberOfChildren}"/></td>
         </tr>
@@ -57,12 +41,32 @@
             <td><input type="date" th:field="*{departDate}"/></td>
         </tr>
         <tr>
-            <td><label/>email Pro</td>
-            <td><input type="text" th:field="*{emailPro}"/></td>
+            <td><label/>function</td>
+            <td><input type="text" th:field="*{function}"/></td>
         </tr>
         <tr>
-            <td><label/>email Perso</td>
-            <td><input type="text" th:field="*{emailPerso}"/></td>
+            <td><label/>cnaps</td>
+            <td><input type="text" th:field="*{cnaps}"/></td>
+        </tr>
+        <tr>
+            <td><label/>Adresse</td>
+            <td><input type="text" th:field="*{address.houseNumber}"/></td>
+            <td><input type="text" th:field="*{address.streetName}"/></td>
+            <td><input type="text" th:field="*{address.region}"/></td>
+            <td><input type="text" th:field="*{address.postalCode}"/></td>
+            <td><input type="text" th:field="*{address.city}"/></td>
+            <td><input type="text" th:field="*{address.country}"/></td>
+        </tr>
+        <tr>
+            <td><label/>CIN</td>
+            <td><label/>number<input type="text" th:field="*{cin.cinNumber}"/></td>
+            <td><label/>date<input type="date" th:field="*{cin.dateDelivery}"/></td>
+            <td><label/>place<input type="text" th:field="*{cin.placeDelivery}"/></td>
+        </tr>
+        <tr>
+            <td><label/>Email</td><p>Perso</p>
+            <td><label>perso<label/><input type="text" th:field="*{email.emailPerso}"/></td>
+            <td><p>Pro</p><input type="text" th:field="*{email.emailPro}"/></td>
         </tr>
         <tr>
             <td><label for="photoFile">Profile Picture:</label></td>

@@ -65,10 +65,10 @@ public class EmployeeMapper {
         employee2.setBirthDate(employee.getBirthDate());
         employee2.setImage(employee.getImage());
         employee2.setSex(employee.getSex());
-        employee2.setEmail(emailMapper.toDomain(employee));
+        /*employee2.setEmail(emailMapper.toDomain(employee));
         employee2.setAddress(addressMapper.toDomain(employee));
         employee2.setPhone(phoneMapper.toDomain(employee));
-        employee2.setCin(cinMapper.toDomain(employee));
+        employee2.setCin(cinMapper.toDomain(employee));*/
         employee2.setFunction(employee.getFunction());
         employee2.setNumberOfChildren(employee.getNumberOfChildren());
         employee2.setArriveDate(employee.getArriveDate());
@@ -76,5 +76,35 @@ public class EmployeeMapper {
         employee2.setCategorieSocioProfessionnelle(employee.getCategorieSocioProfessionnelle());
         employee2.setCnaps(employee.getCnaps());
         return employee2;
+    }
+    public UpdateEmployeeResponse toDomain(Employee employee){
+        UpdateEmployeeResponse updateEmployeeResponse = new UpdateEmployeeResponse();
+        updateEmployeeResponse.setId(employee.getId());
+        updateEmployeeResponse.setFirstName(employee.getFirstName());
+        updateEmployeeResponse.setLastName(employee.getLastName());
+        updateEmployeeResponse.setBirthDate(employee.getBirthDate());
+        updateEmployeeResponse.setMatricule(employee.getMatricule());
+        updateEmployeeResponse.setImage(employee.getImage());
+        updateEmployeeResponse.setSex(employee.getSex());
+        updateEmployeeResponse.setEmailPerso(employee.getEmail().getEmailPerso());
+        updateEmployeeResponse.setEmailPro(employee.getEmail().getEmailPro());
+        updateEmployeeResponse.setHouseNumber(employee.getAddress().getHouseNumber());
+        updateEmployeeResponse.setStreetName(employee.getAddress().getStreetName());
+        updateEmployeeResponse.setDistrict(employee.getAddress().getDistrict());
+        updateEmployeeResponse.setCity(employee.getAddress().getCity());
+        updateEmployeeResponse.setPostalCode(employee.getAddress().getPostalCode());
+        updateEmployeeResponse.setRegion(employee.getAddress().getRegion());
+        updateEmployeeResponse.setCountry(employee.getAddress().getCountry());
+        //updateEmployeeResponse.setPhoneNumber(employee.getPhone().stream());
+        updateEmployeeResponse.setCinNumber(employee.getCin().getCinNumber());
+        updateEmployeeResponse.setCinDateDelivery(employee.getCin().getDateDelivery());
+        updateEmployeeResponse.setCinPlaceDelivery(employee.getCin().getPlaceDelivery());
+        updateEmployeeResponse.setFunction(employee.getFunction());
+        updateEmployeeResponse.setNumberOfChildren(employee.getNumberOfChildren());
+        updateEmployeeResponse.setArriveDate(employee.getArriveDate());
+        updateEmployeeResponse.setDepartDate(employee.getDepartDate());
+        updateEmployeeResponse.setCategorieSocioProfessionnelle(employee.getCategorieSocioProfessionnelle());
+        updateEmployeeResponse.setCnaps(employee.getCnaps());
+        return updateEmployeeResponse;
     }
 }
