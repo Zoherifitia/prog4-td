@@ -13,11 +13,15 @@
     <td th:text="${employee.lastName}" />
     <td th:text="${employee.birthDate}"/>
     <td th:text="${employee.sex}"/>
-    <!--<td th:text="${employee.phone}" h/>-->
-    <td th:text="${employee.cin}"/>
-    <td th:text="${employee.numberOfChildren}"/>
-    <td th:text="${employee.address}"/>
     <td>
+        <p>CIN</p>
+        <span th:text="'CIN number: '+${employee.cin.cinNumber}" />
+        <span th:text="'Date Delivery: ' +${employee.cin.dateDelivery}"/>
+        <span th:text="'Place Delivery: '+${employee.cin.placeDelivery}"/>
+    </td>
+    <td th:text="${employee.numberOfChildren}"/>
+    <td>
+        <p>Adress</p>
         <span th:text="${employee.address.houseNumber} + ' ' +
          ${employee.address.streetName} + ' ' +
          ${employee.address.district} + ' ' +
@@ -25,7 +29,6 @@
          ${employee.address.postalCode} + ' ' +
          ${employee.address.region} + ' ' +
          ${employee.address.country}">
-
         </span>
     </td>
     <td th:text="${employee.function}"/>
