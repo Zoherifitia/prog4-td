@@ -5,6 +5,7 @@ import lombok.*;
 import org.springframework.context.annotation.Primary;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -25,7 +26,6 @@ public class Employee {
     private byte[] image;
 
     //Téléphones : un employé peut avoir plusieurs
-    //adresse exacte,
     private Sex sex;
 
     @OneToMany

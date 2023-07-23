@@ -5,6 +5,7 @@ import com.example.employee.controller.response.CreateEmployeeResponse;
 import com.example.employee.controller.response.EmployeeResponse;
 import com.example.employee.controller.response.UpdateEmployeeResponse;
 import com.example.employee.modele.Employee;
+import com.example.employee.modele.Phone;
 import com.example.employee.service.EmployeeService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpHeaders;
@@ -17,7 +18,9 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Controller
 @AllArgsConstructor
@@ -38,7 +41,7 @@ public class EmployeeController {
         return "createEmployee";
     }
     @PostMapping("/save-employee")
-    public String updateEmployee(@ModelAttribute("createEmployee") CreateEmployeeResponse createEmployeeResponse,
+    public String saveEmployee(@ModelAttribute("createEmployee") CreateEmployeeResponse createEmployeeResponse,
                                  @RequestParam("photoFile") MultipartFile photoFile) throws IOException {
         if (!photoFile.isEmpty()) {
             // Récupérer les données binaires de l'image
@@ -48,6 +51,12 @@ public class EmployeeController {
         }else {
             System.out.println("aucune image");
         }
+        List<String> formattedPhones = Arrays.stream(createEmployeeResponse.getPhone().split(","))
+                .map(phone -> "-" + phone)
+                .collect(Collectors.toList());
+
+        createEmployeeResponse.setPhone(String.join("<br/>", formattedPhones));
+
         employeeService.saveEmployee(employeeMapper.toDomain(createEmployeeResponse));
         return "redirect:/save-employee";
     }

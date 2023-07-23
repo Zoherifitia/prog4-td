@@ -1,13 +1,11 @@
 package com.example.employee.service;
 
-import com.example.employee.modele.Address;
-import com.example.employee.modele.CIN;
-import com.example.employee.modele.Email;
-import com.example.employee.modele.Employee;
+import com.example.employee.modele.*;
 import com.example.employee.repository.EmployeeRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -17,6 +15,7 @@ public class EmployeeService {
     private CinService cinService;
     private EmailService emailService;
     private AddressService addressService;
+    private PhoneService phoneService;
     public List<Employee> getEmployee(){
         return employeeRepository.findAll();
     }
@@ -27,8 +26,24 @@ public class EmployeeService {
         employee.setEmail(email);
         Address address= addressService.save(employee.getAddress());
         employee.setAddress(address);
+        List<Phone> phoneList = employee.getPhone();
+        List<Phone> savedPhoneList = new ArrayList<>();
+// sauvegarder chaque objet Phone individuellement
+        for (Phone phone : phoneList) {
+            Phone savedPhone = phoneService.save(phone);
+            savedPhoneList.add(savedPhone);
+        }
+// Mettre à jour la liste de téléphones de l'employé avec les objets sauvegardés
+        employee.setPhone(savedPhoneList);
         return employeeRepository.save(employee);
     }
+    /*public void addPhoneToEmployee(Integer employeeId, Phone phone) {
+        Employee employee = employeeRepository.findById(employeeId).orElse(null);
+        if (employee != null) {
+            employee.getPhone().add(phone);
+            employeeRepository.save(employee);
+        }
+    }*/
 
     public Employee getEmployeeById(Integer id) {
         return employeeRepository.findById(id)

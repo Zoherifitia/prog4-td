@@ -23,7 +23,7 @@ public class CreateEmployeeResponse {
     private LocalDate birthDate;
     private byte[] image;
     private Employee.Sex sex;
-    private List<Phone> phone;
+    private String phone;
     private String houseNumber;
     private String streetName;
     private String district;

@@ -17,11 +17,28 @@
     <td th:text="${employee.cin}"/>
     <td th:text="${employee.numberOfChildren}"/>
     <td th:text="${employee.address}"/>
+    <td>
+        <span th:text="${employee.address.houseNumber} + ' ' +
+         ${employee.address.streetName} + ' ' +
+         ${employee.address.district} + ' ' +
+         ${employee.address.city} + ' ' +
+         ${employee.address.postalCode} + ' ' +
+         ${employee.address.region} + ' ' +
+         ${employee.address.country}">
+
+        </span>
+    </td>
     <td th:text="${employee.function}"/>
     <td th:text="${employee.arriveDate}"/>
     <td th:text="${employee.departDate}"/>
     <td th:text="${employee.categorieSocioProfessionnelle}"/>
-    <td th:text="${employee.email}"/>
+    <td th:text="${employee.email.emailPro}"/>
+    <td th:text="${employee.email.emailPerso}"/>
+    <td>
+    <span th:each="phone : ${employee.phone}">
+        Phone : <span th:utext="${phone.phoneNumber}"></span><br/>
+    </span>
+    </td>
 </tr>
 </table>
 <img th:src="@{'/employee/' + ${employee.id} + '/image'}" alt="aucune photo" />

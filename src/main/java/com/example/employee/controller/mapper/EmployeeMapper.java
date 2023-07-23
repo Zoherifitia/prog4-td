@@ -13,6 +13,7 @@ public class EmployeeMapper {
     private CinMapper cinMapper;
     private EmailMapper emailMapper;
     private AddressMapper addressMapper;
+    private PhoneMapper phoneMapper;
     public EmployeeResponse toRest(Employee domain){
         return EmployeeResponse.builder()
                 .id(domain.getId())
@@ -45,7 +46,7 @@ public class EmployeeMapper {
         employee1.setSex(employee.getSex());
         employee1.setEmail(emailMapper.toDomain(employee));
         employee1.setAddress(addressMapper.toDomain(employee));
-        employee1.setPhone(employee.getPhone());
+        employee1.setPhone(phoneMapper.toDomain(employee));
         employee1.setCin(cinMapper.toDomain(employee));
         employee1.setFunction(employee.getFunction());
         employee1.setNumberOfChildren(employee.getNumberOfChildren());
@@ -66,7 +67,7 @@ public class EmployeeMapper {
         employee2.setSex(employee.getSex());
         employee2.setEmail(emailMapper.toDomain(employee));
         employee2.setAddress(addressMapper.toDomain(employee));
-        employee2.setPhone(employee.getPhone());
+        employee2.setPhone(phoneMapper.toDomain(employee));
         employee2.setCin(cinMapper.toDomain(employee));
         employee2.setFunction(employee.getFunction());
         employee2.setNumberOfChildren(employee.getNumberOfChildren());

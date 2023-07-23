@@ -24,7 +24,7 @@ public class UpdateEmployeeResponse {
     private LocalDate birthDate;
     private byte[] image;
     private Employee.Sex sex;
-    private List<Phone> phone;
+    private String phoneNumber;
     private String houseNumber;
     private String streetName;
     private String district;
