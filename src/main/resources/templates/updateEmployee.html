@@ -5,15 +5,16 @@
     <title>Update Employee</title>
 </head>
 <body>
-<form action="#" th:action="@{'/employee/'+${id}+'/edit'}" th:object="${updateEmployee}" method="post" enctype="multipart/form-data">
+<form action="#" th:action="@{'/employee/'+${id}+'/edit'}" th:object="${updateEmployee}" method="post"
+      enctype="multipart/form-data">
     <table>
         <tr>
             <td><label/>firstName</td>
-            <td><input type="text" th:field="*{firstName}" /></td>
+            <td><input type="text" th:field="*{firstName}"/></td>
         </tr>
         <tr>
-            <td><label />lastName</td>
-            <td><input type="text" th:field="*{lastName}" /></td>
+            <td><label/>lastName</td>
+            <td><input type="text" th:field="*{lastName}"/></td>
         </tr>
         <tr>
             <td><label/>Birth Date</td>
@@ -64,16 +65,17 @@
             <td><label/>place<input type="text" th:field="*{cin.placeDelivery}"/></td>
         </tr>
         <tr>
-            <td><label/>Email</td><p>Perso</p>
+            <td><label/>Email</td>
+            <p>Perso</p>
             <td><label>perso<label/><input type="text" th:field="*{email.emailPerso}"/></td>
             <td><p>Pro</p><input type="text" th:field="*{email.emailPro}"/></td>
         </tr>
         <tr>
             <td><label for="photoFile">Profile Picture:</label></td>
-            <td><input type="file" id="photoFile" name="photoFile" accept="image/*" /></td>
+            <td><input type="file" id="photoFile" name="photoFile" accept="image/*"/></td>
         </tr>
         <tr>
-            <td><input type="submit" value="Submit" /></td>
+            <td><input type="submit" value="Submit"/></td>
         </tr>
     </table>
     <a href="/employees" class="btn btn-primary">Liste des employee</a>

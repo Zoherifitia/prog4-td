@@ -28,8 +28,22 @@ public class EmployeeController {
     private EmployeeMapper employeeMapper;
 
     @GetMapping("/employees")
-    public String getAll(Model model){
-        List<EmployeeResponse> employees = employeeService.getEmployee().stream().map(employeeMapper::toRest).toList();
+    public String getAll(@RequestParam(required = false) String firstName,
+                         @RequestParam(required = false) String lastName,
+                         @RequestParam(required = false) Employee.Sex sex,
+                         @RequestParam(required = false) String function,
+                         Model model){
+        List<Employee> employees;
+
+        if (firstName == null && lastName == null && sex == null && function == null) {
+            // Si aucun paramètre de filtrage n'est fourni, récupérez tous les employés.
+            employees = employeeService.getEmployee();
+        } else {
+            // Sinon, filtrez les employés en fonction des paramètres fournis.
+            employees = employeeService.filterEmployees(firstName, lastName, sex, function);
+        }
+
+        //List<EmployeeResponse> employees = employeeService.getEmployee().stream().map(employeeMapper::toRest).toList();
         model.addAttribute("employees",employees);
         return "employees";
     }
@@ -107,4 +121,31 @@ public class EmployeeController {
     }
 
 
+    //rechercher un employee
+    @GetMapping("/employee/search")
+    public String showSearchForm(Model model) {
+        model.addAttribute("employeeSearch", new Employee()); // Créez une nouvelle instance d'Employee pour le formulaire
+        return "search"; // Renvoie la page du formulaire de recherche
+    }
+
+    @PostMapping("/employee/search")
+    public String search(@ModelAttribute("employeeSearch") Employee employee, Model model) {
+        Employee employeeResult = employeeService.getEmployeeById(employee.getId());
+        model.addAttribute("employee", employeeResult);
+        return "search"; // Renvoie la page de résultat de la recherche
+    }
+
+    //filtre
+    /*@GetMapping("/employee/filter")
+    public String showFilterForm(Model model) {
+        model.addAttribute("employeeFilter", new EmployeeFilter());
+        return "filter";
+    }
+
+    @PostMapping("/employee/filter")
+    public String filter(@ModelAttribute("employeeFilter") EmployeeFilter employeeFilter, Model model) {
+        List<Employee> filteredEmployees = employeeService.getEmployeesByFilter(employeeFilter);
+        model.addAttribute("employees", filteredEmployees);
+        return "filter";
+    }*/
 }

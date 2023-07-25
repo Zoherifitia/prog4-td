@@ -25,7 +25,6 @@ public class Employee {
     private LocalDate birthDate;
     private byte[] image;
 
-    //Téléphones : un employé peut avoir plusieurs
     private Sex sex;
 
     @OneToMany
