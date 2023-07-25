@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>search</title>
+</head>
+<body>
+<div>
+  <h2>search employee</h2><br/>
+  <div>
+    <form action="#" th:action="@{/employee/search}" th:object="${employeeSearch}" method="post">
+      <div>
+        <label>ID</label>
+        <input type="number" th:field="*{id}">
+      </div>
+      <!--<div>
+        <label>First Name</label>
+        <input type="text" th:field="*{firstName}"/>
+      </div>
+      <div>
+        <label>Last Name</label>
+        <input type="text" th:field="*{lastName}"/>
+      </div>
+      <div>
+        <label>Gender</label>
+        <input type="text" th:field="*{sex}"/>
+      </div>
+      <div>
+        <label>Job Title</label>
+        <input type="text" th:field="*{function}"/>
+      </div>-->
+      <button type="submit">search</button>
+    </form>
+  </div>
+  <div>
+    <h3>Search Results:</h3>
+    <table>
+      <tr>
+        <th>ID</th>
+        <th>First Name</th>
+        <th>Last Name</th>
+        <th>Gender</th>
+        <th>Job Title</th>
+        <!-- Add more fields here as needed -->
+      </tr>
+      <tr th:each="employee : ${employee}">
+        <td th:text="${employee.id}"></td>
+        <td th:text="${employee.firstName}"></td>
+        <td th:text="${employee.lastName}"></td>
+        <td th:text="${employee.sex}"></td>
+        <td th:text="${employee.function}"></td>
+        <!-- Add more fields here as needed -->
+      </tr>
+    </table>
+    <!--<p th:if="${employee.size() == 0}">No employees found.</p>-->
+  </div>
+</div>
+</body>
+</html>
+
+
