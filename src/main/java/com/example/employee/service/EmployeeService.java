@@ -11,6 +11,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -51,36 +52,31 @@ public class EmployeeService {
         return employeeRepository.save(employee);
     }
 
-    /*public List<Employee> filterEmployees(String firstName, String lastName, Employee.Sex sex, String function) {
-        return employeeRepository.findByFirstNameAndLastNameAndSexAndFunction(firstName, lastName, sex, function);
-    }*/
     public List<Employee> filterEmployees(String firstName, String lastName, Employee.Sex sex, String function) {
         CriteriaBuilder cb = entityManager.getCriteriaBuilder();
         CriteriaQuery<Employee> cq = cb.createQuery(Employee.class);
         Root<Employee> root = cq.from(Employee.class);
-
         // Créer les prédicats pour les filtres
         Predicate predicate = cb.conjunction(); // Combinaison de tous les prédicats (AND)
 
         if (firstName != null && !firstName.isEmpty()) {
             predicate = cb.and(predicate, cb.equal(root.get("firstName"), firstName));
         }
-
         if (lastName != null && !lastName.isEmpty()) {
             predicate = cb.and(predicate, cb.equal(root.get("lastName"), lastName));
         }
-
         if (sex != null) {
             predicate = cb.and(predicate, cb.equal(root.get("sex"), sex));
         }
-
         if (function != null && !function.isEmpty()) {
             predicate = cb.and(predicate, cb.equal(root.get("function"), function));
         }
-
         cq.where(predicate);
-
         return entityManager.createQuery(cq).getResultList();
+    }
+
+    public List<Employee> filterEmployeesByDateRange(Date arriveDate, Date departDate) {
+        return employeeRepository.filterEmployeesByDateRange(arriveDate, departDate);
     }
 
 }

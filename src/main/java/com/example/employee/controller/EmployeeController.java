@@ -17,7 +17,10 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -32,21 +35,35 @@ public class EmployeeController {
                          @RequestParam(required = false) String lastName,
                          @RequestParam(required = false) Employee.Sex sex,
                          @RequestParam(required = false) String function,
-                         Model model){
-        List<Employee> employees;
-
-        if (firstName == null && lastName == null && sex == null && function == null) {
-            // Si aucun paramètre de filtrage n'est fourni, récupérez tous les employés.
-            employees = employeeService.getEmployee();
-        } else {
-            // Sinon, filtrez les employés en fonction des paramètres fournis.
-            employees = employeeService.filterEmployees(firstName, lastName, sex, function);
+                         @RequestParam(required = false) String arriveDateStr,
+                         @RequestParam(required = false) String departDateStr,
+                         Model model) throws ParseException {
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        Date arriveDate = null;
+        Date departDate = null;
+        if (arriveDateStr != null && departDateStr != null) {
+            arriveDate = dateFormat.parse(arriveDateStr);
+            departDate = dateFormat.parse(departDateStr);
         }
-
-        //List<EmployeeResponse> employees = employeeService.getEmployee().stream().map(employeeMapper::toRest).toList();
-        model.addAttribute("employees",employees);
-        return "employees";
+        List<EmployeeResponse> employees;
+        if (isEmpty(firstName, lastName, sex, function, arriveDateStr, departDateStr)) {
+            // Si tous les paramètres de filtrage sont vides, récupérez tous les employés.
+            employees = employeeService.getEmployee().stream().map(employeeMapper::toRest).toList();
+            model.addAttribute("employees", employees);
+            return "employees";
+        } else {
+            // Sinon, effectuez le filtrage des employés avec les paramètres fournis.
+            employees = employeeService.filterEmployees(firstName, lastName, sex, function).stream().map(employeeMapper::toRest).toList();
+            model.addAttribute("employees", employees);
+            return "employees";
+        }
     }
+
+    //vérifier si tous les paramètres de filtrage sont vides
+    private boolean isEmpty(String firstName, String lastName, Employee.Sex sex, String function, String arriveDateStr, String departDateStr) {
+        return firstName == null && lastName == null && sex == null && function == null && arriveDateStr == null && departDateStr == null;
+    }
+
     @GetMapping("/save-employee")
     public String getEmployee(Model model){
         CreateEmployeeResponse createEmployeeResponse = new CreateEmployeeResponse();
