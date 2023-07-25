@@ -75,8 +75,8 @@ public class EmployeeService {
         return entityManager.createQuery(cq).getResultList();
     }
 
-    public List<Employee> filterEmployeesByDateRange(Date arriveDate, Date departDate) {
-        return employeeRepository.filterEmployeesByDateRange(arriveDate, departDate);
+    public List<Employee> filterEmployeesByDateRange(Date date) {
+        return employeeRepository.filterEmployeesByDate(date);
     }
 
 }

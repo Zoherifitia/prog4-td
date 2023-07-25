@@ -35,33 +35,37 @@ public class EmployeeController {
                          @RequestParam(required = false) String lastName,
                          @RequestParam(required = false) Employee.Sex sex,
                          @RequestParam(required = false) String function,
-                         @RequestParam(required = false) String arriveDateStr,
-                         @RequestParam(required = false) String departDateStr,
+                         @RequestParam(required = false) String dateStr,
+                         /*@RequestParam(required = false) String departDateStr,*/
                          Model model) throws ParseException {
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-        Date arriveDate = null;
-        Date departDate = null;
-        if (arriveDateStr != null && departDateStr != null) {
-            arriveDate = dateFormat.parse(arriveDateStr);
-            departDate = dateFormat.parse(departDateStr);
-        }
+        /*SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        Date date = null;
+
+        if (dateStr != null && !dateStr.isEmpty()) {
+            date = dateFormat.parse(dateStr);
+        }*/
         List<EmployeeResponse> employees;
-        if (isEmpty(firstName, lastName, sex, function, arriveDateStr, departDateStr)) {
+        if (isEmpty(firstName, lastName, sex, function, dateStr)) {
             // Si tous les paramètres de filtrage sont vides, récupérez tous les employés.
             employees = employeeService.getEmployee().stream().map(employeeMapper::toRest).toList();
-            model.addAttribute("employees", employees);
-            return "employees";
         } else {
-            // Sinon, effectuez le filtrage des employés avec les paramètres fournis.
-            employees = employeeService.filterEmployees(firstName, lastName, sex, function).stream().map(employeeMapper::toRest).toList();
-            model.addAttribute("employees", employees);
-            return "employees";
+            if (dateStr != null && !dateStr.isEmpty()) {
+                // Si dateStr est spécifié, filtrez par date d'embauche ou de départ.
+                SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+                Date date = dateFormat.parse(dateStr);
+                employees = employeeService.filterEmployeesByDateRange(date).stream().map(employeeMapper::toRest).toList();
+            } else {
+                // Sinon, effectuez le filtrage des employés avec les autres paramètres fournis.
+                employees = employeeService.filterEmployees(firstName, lastName, sex, function).stream().map(employeeMapper::toRest).toList();
+            }
         }
+        model.addAttribute("employees", employees);
+        return "employees";
     }
 
     //vérifier si tous les paramètres de filtrage sont vides
-    private boolean isEmpty(String firstName, String lastName, Employee.Sex sex, String function, String arriveDateStr, String departDateStr) {
-        return firstName == null && lastName == null && sex == null && function == null && arriveDateStr == null && departDateStr == null;
+    private boolean isEmpty(String firstName, String lastName, Employee.Sex sex, String function, String dateStr) {
+        return firstName == null && lastName == null && sex == null && function == null && dateStr == null;
     }
 
     @GetMapping("/save-employee")

@@ -18,7 +18,7 @@ public interface EmployeeRepository extends JpaRepository<Employee,Integer> {
 
     /*@Query(value = "SELECT * FROM employee WHERE date_of_hire BETWEEN :arriveDate AND :departDate OR date_of_departure BETWEEN :arriveDate AND :departDate", nativeQuery = true)
     List<Employee> filterEmployeesByDateRange(Date arriveDate, Date departDate);*/
-    @Query(value = "SELECT * FROM employee WHERE arrive_date BETWEEN :arriveDate AND :departDate OR depart_date BETWEEN :arriveDate AND :departDate", nativeQuery = true)
-    List<Employee> filterEmployeesByDateRange(@Param("arriveDate") Date arriveDate, @Param("departDate") Date departDate);
+    @Query(value = "SELECT * FROM employee WHERE arrive_date = :date OR depart_date = :date", nativeQuery = true)
+    List<Employee> filterEmployeesByDate(@Param("date") Date date);
 
 }
