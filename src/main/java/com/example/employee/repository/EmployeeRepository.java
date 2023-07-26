@@ -15,8 +15,10 @@ import java.util.Optional;
 @Repository
 public interface EmployeeRepository extends JpaRepository<Employee,Integer> {
     Optional<Employee> findById(Integer id);
-    @Query(value = "SELECT * FROM employee WHERE arrive_date = :date OR depart_date = :date", nativeQuery = true)
+    @Query(value = "SELECT * FROM employee WHERE arrive_date = :date OR depart_date = :date"
+            , nativeQuery = true)
     List<Employee> filterEmployeesByDate(@Param("date") Date date);
+
     //triage avec date
     @Query(value = "SELECT * FROM employee " +
             "WHERE UPPER(first_name) LIKE CONCAT('%',UPPER(:firstName),'%')" +
@@ -27,6 +29,17 @@ public interface EmployeeRepository extends JpaRepository<Employee,Integer> {
                                    @Param("function") String function);
     @Query(value = "SELECT * FROM employee WHERE sex = :sex", nativeQuery = true)
     List<Employee> filterEmployeeBySex(@Param("sex")Employee.Sex sex);
+
+    @Query(value = "SELECT * FROM employee WHERE sex = :sex"+"ORDER BY CASE " +
+            "  WHEN UPPER(:order) = 'ASC' THEN sex " +
+            "  WHEN UPPER(:order) = 'DESC' THEN sex " +
+            "END ASC, ", nativeQuery = true)
+    List<Employee> filterEmployeesOrderBySexAsc(@Param("sex")Employee.Sex sex,String order );
+    @Query(value = "SELECT * FROM employee WHERE sex = :sex"+"ORDER BY CASE " +
+            "  WHEN UPPER(:order) = 'ASC' THEN sex " +
+            "  WHEN UPPER(:order) = 'DESC' THEN sex " +
+            "END ASC, ", nativeQuery = true)
+    List<Employee> filterEmployeesOrderBySexDesc(@Param("sex")Employee.Sex sex,String order);
 
     //triage
     @Query(value = "SELECT * FROM employee " +

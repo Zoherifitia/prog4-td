@@ -47,10 +47,10 @@ public class EmployeeController {
                 //filtrez par date d'embauche ou de départ.
                 SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
                 Date date = dateFormat.parse(dateStr);
-                employees = employeeService.filterEmployeesByDateRange(date).stream().map(employeeMapper::toRest).toList();
+                employees = employeeService.filterEmployeesByDateRange(date,order).stream().map(employeeMapper::toRest).toList();
             } else if (sexStr !=null && !sexStr.isEmpty()) {
                 Employee.Sex sex = Employee.Sex.valueOf(sexStr);
-                employees = employeeService.filterBySex(sex).stream().map(employeeMapper::toRest).toList();
+                employees = employeeService.filterBySex(sex,order).stream().map(employeeMapper::toRest).toList();
             } else {
                 // Sinon, effectuez le filtrage des employés avec les autres paramètres fournis.
                 employees = employeeService.filterEmployee(firstName, lastName, function,order).stream().map(employeeMapper::toRest).toList();

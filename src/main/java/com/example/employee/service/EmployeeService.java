@@ -12,6 +12,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -76,21 +77,38 @@ public class EmployeeService {
     }*/
     public List<Employee> filterEmployee(String firstName, String lastName, String function,String order) {
         //order
+        List<Employee> employees = employeeRepository.filterEmployees(firstName, lastName, function);
+
         if (order != null && !order.isEmpty()) {
-            if (order.equalsIgnoreCase("asc")) {
-                return employeeRepository.filterEmployeesOrderByFieldAsc(firstName, lastName, function,order);
-            } else if (order.equalsIgnoreCase("desc")) {
-                return employeeRepository.filterEmployeesOrderByFieldDesc(firstName, lastName, function,order);
+            // Trier la liste des employés en fonction de l'ordre choisi.
+            if (order.equals("asc")) {
+               employees= employeeRepository.filterEmployeesOrderByFieldAsc(firstName,lastName,function,order);
+            } else if (order.equals("desc")) {
+                employees=employeeRepository.filterEmployeesOrderByFieldDesc(firstName,lastName,function,order);
             }
         }
-        return employeeRepository.filterEmployees(firstName, lastName, function);
+        //return employeeRepository.filterEmployees(firstName, lastName, function);
+        return employees;
     }
 
-    public List<Employee> filterEmployeesByDateRange(Date date) {
-        return employeeRepository.filterEmployeesByDate(date);
+    public List<Employee> filterEmployeesByDateRange(Date date,String order) {
+        //order
+        List<Employee> employees = employeeRepository.filterEmployeesByDate(date);
+        //return employeeRepository.filterEmployeesByDate(date);
+        return employees;
     }
-    public List<Employee> filterBySex(Employee.Sex sex){
-        return employeeRepository.filterEmployeeBySex(sex);
+    public List<Employee> filterBySex(Employee.Sex sex,String order){
+        //order
+        List<Employee> employees = employeeRepository.filterEmployeeBySex(sex);
+        if (order != null && !order.isEmpty()) {
+            // Trier la liste des employés en fonction de l'ordre choisi.
+            if (order.equals("asc")) {
+                employees= employeeRepository.filterEmployeesOrderBySexAsc(sex,order);
+            } else if (order.equals("desc")) {
+                employees=employeeRepository.filterEmployeesOrderBySexDesc(sex,order);
+            }
+        }
+        return employees;
     }
 }
 
