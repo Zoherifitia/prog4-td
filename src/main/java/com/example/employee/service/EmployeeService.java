@@ -74,7 +74,15 @@ public class EmployeeService {
         cq.where(predicate);
         return entityManager.createQuery(cq).getResultList();
     }*/
-    public List<Employee> filterEmployee(String firstName, String lastName, String function) {
+    public List<Employee> filterEmployee(String firstName, String lastName, String function,String order) {
+        //order
+        if (order != null && !order.isEmpty()) {
+            if (order.equalsIgnoreCase("asc")) {
+                return employeeRepository.filterEmployeesOrderByFieldAsc(firstName, lastName, function,order);
+            } else if (order.equalsIgnoreCase("desc")) {
+                return employeeRepository.filterEmployeesOrderByFieldDesc(firstName, lastName, function,order);
+            }
+        }
         return employeeRepository.filterEmployees(firstName, lastName, function);
     }
 

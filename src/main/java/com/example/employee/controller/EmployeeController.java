@@ -37,6 +37,7 @@ public class EmployeeController {
                          @RequestParam(required = false) String sexStr,
                          @RequestParam(required = false) String function,
                          @RequestParam(required = false) String dateStr,
+                         @RequestParam(required = false) String order,
                          Model model) throws ParseException {
         List<EmployeeResponse> employees;
         if (isEmpty(firstName, lastName, sexStr, function, dateStr)) {
@@ -52,7 +53,7 @@ public class EmployeeController {
                 employees = employeeService.filterBySex(sex).stream().map(employeeMapper::toRest).toList();
             } else {
                 // Sinon, effectuez le filtrage des employés avec les autres paramètres fournis.
-                employees = employeeService.filterEmployee(firstName, lastName, function).stream().map(employeeMapper::toRest).toList();
+                employees = employeeService.filterEmployee(firstName, lastName, function,order).stream().map(employeeMapper::toRest).toList();
             }
         }
 
