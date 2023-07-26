@@ -3,48 +3,56 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
-<h2>Fiche Employee</h2>
-<table>
-<tr >
-    <td th:text="${employee.generateMatricule()}" />
-    <td th:text="${employee.firstName}" />
-    <td th:text="${employee.lastName}" />
-    <td th:text="${employee.birthDate}"/>
-    <td th:text="${employee.sex}"/>
-    <td>
-        <p>CIN</p>
-        <span th:text="'CIN number: '+${employee.cin.cinNumber}" />
-        <span th:text="'Date Delivery: ' +${employee.cin.dateDelivery}"/>
-        <span th:text="'Place Delivery: '+${employee.cin.placeDelivery}"/>
-    </td>
-    <td th:text="${employee.numberOfChildren}"/>
-    <td>
-        <p>Adress</p>
-        <span th:text="${employee.address.houseNumber} + ' ' +
-         ${employee.address.streetName} + ' ' +
-         ${employee.address.district} + ' ' +
-         ${employee.address.city} + ' ' +
-         ${employee.address.postalCode} + ' ' +
-         ${employee.address.region} + ' ' +
-         ${employee.address.country}">
-        </span>
-    </td>
-    <td th:text="${employee.function}"/>
-    <td th:text="${employee.arriveDate}"/>
-    <td th:text="${employee.departDate}"/>
-    <td th:text="${employee.categorieSocioProfessionnelle}"/>
-    <td th:text="${employee.email.emailPro}"/>
-    <td th:text="${employee.email.emailPerso}"/>
-    <td>
-    <span th:each="phone : ${employee.phone}">
-        Phone : <span th:utext="${phone.phoneNumber}"></span><br/>
-    </span>
-    </td>
-</tr>
-</table>
-<img th:src="@{'/employee/' + ${employee.id} + '/image'}" alt="aucune photo" />
+<div class="container mt-4">
+<h2 class="text-center mb-4">Fiche Employee</h2>
+    <div class="table-responsive row col-md-6">
+        <table class="table table-bordered table-sm">
+        <tr >
+            <td th:text="${employee.generateMatricule()}" />
+            <td th:text="${employee.firstName}" />
+            <td th:text="${employee.lastName}" />
+            <td th:text="${employee.birthDate}"/>
+            <td th:text="${employee.sex}"/>
+            <td>
+                <p>CIN</p>
+                <span th:text="'CIN number: '+${employee.cin.cinNumber}" />
+                <span th:text="'Date Delivery: ' +${employee.cin.dateDelivery}"/>
+                <span th:text="'Place Delivery: '+${employee.cin.placeDelivery}"/>
+            </td>
+            <td th:text="${employee.numberOfChildren}"/>
+            <td>
+                <p>Adress</p>
+                <span th:text="${employee.address.houseNumber} + ' ' +
+                 ${employee.address.streetName} + ' ' +
+                 ${employee.address.district} + ' ' +
+                 ${employee.address.city} + ' ' +
+                 ${employee.address.postalCode} + ' ' +
+                 ${employee.address.region} + ' ' +
+                 ${employee.address.country}">
+                </span>
+            </td>
+            <td th:text="${employee.function}"/>
+            <td th:text="${employee.arriveDate}"/>
+            <td th:text="${employee.departDate}"/>
+            <td th:text="${employee.categorieSocioProfessionnelle}"/>
+            <td th:text="${employee.email.emailPro}"/>
+            <td th:text="${employee.email.emailPerso}"/>
+            <td>
+            <span th:each="phone : ${employee.phone}">
+                Phone : <span th:utext="${phone.phoneNumber}"></span><br/>
+            </span>
+            </td>
+        </tr>
+    </table>
+    </div>
+    <div col-md-6>
+        <img class="img-fluid rounded mx-auto d-block" th:src="@{'/employee/' + ${employee.id} + '/image'}" alt="aucune photo" />
+    </div>
 <a href="/employees" class="btn btn-primary">List des employees</a>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

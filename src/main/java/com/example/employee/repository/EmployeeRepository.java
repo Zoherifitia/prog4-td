@@ -15,10 +15,26 @@ import java.util.Optional;
 @Repository
 public interface EmployeeRepository extends JpaRepository<Employee,Integer> {
     Optional<Employee> findById(Integer id);
-
-    /*@Query(value = "SELECT * FROM employee WHERE date_of_hire BETWEEN :arriveDate AND :departDate OR date_of_departure BETWEEN :arriveDate AND :departDate", nativeQuery = true)
-    List<Employee> filterEmployeesByDateRange(Date arriveDate, Date departDate);*/
     @Query(value = "SELECT * FROM employee WHERE arrive_date = :date OR depart_date = :date", nativeQuery = true)
     List<Employee> filterEmployeesByDate(@Param("date") Date date);
+
+    /*@Query(value = "SELECT * FROM employee " +
+            "WHERE UPPER(first_name) LIKE CONCAT('%',UPPER(first_name),'%')" +
+            "AND UPPER(last_name) LIKE CONCAT('%',UPPER(last_name),'%')" +
+            "AND UPPER(sex) LIKE CONCAT('%',UPPER(sex),'%')" +
+            "AND UPPER(function) LIKE CONCAT('%',UPPER(function),'%')", nativeQuery = true)
+    List<Employee> filterEmployees(@Param("firstName") String firstName,
+                                   @Param("lastName") String lastName,
+                                   @Param("sex") Employee.Sex sex,
+                                   @Param("function") String function);*/
+    @Query(value = "SELECT * FROM employee " +
+            "WHERE UPPER(first_name) LIKE CONCAT('%',UPPER(:firstName),'%')" +
+            "AND UPPER(last_name) LIKE CONCAT('%',UPPER(:lastName),'%')" +
+            "AND UPPER(function) LIKE CONCAT('%',UPPER(:function),'%')", nativeQuery = true)
+    List<Employee> filterEmployees(@Param("firstName") String firstName,
+                                   @Param("lastName") String lastName,
+                                   @Param("function") String function);
+    @Query(value = "SELECT * FROM employee WHERE sex = :sex", nativeQuery = true)
+    List<Employee> filterEmployeeBySex(@Param("sex")Employee.Sex sex);
 
 }

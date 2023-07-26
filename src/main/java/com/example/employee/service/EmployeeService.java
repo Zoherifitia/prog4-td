@@ -3,6 +3,7 @@ package com.example.employee.service;
 import com.example.employee.modele.*;
 import com.example.employee.repository.EmployeeRepository;
 import jakarta.persistence.EntityManager;
+import jakarta.persistence.Query;
 import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.CriteriaQuery;
 import jakarta.persistence.criteria.Predicate;
@@ -52,13 +53,12 @@ public class EmployeeService {
         return employeeRepository.save(employee);
     }
 
-    public List<Employee> filterEmployees(String firstName, String lastName, Employee.Sex sex, String function) {
+    /*public List<Employee> filterEmployees(String firstName, String lastName, Employee.Sex sex, String function) {
         CriteriaBuilder cb = entityManager.getCriteriaBuilder();
         CriteriaQuery<Employee> cq = cb.createQuery(Employee.class);
         Root<Employee> root = cq.from(Employee.class);
         // Créer les prédicats pour les filtres
         Predicate predicate = cb.conjunction(); // Combinaison de tous les prédicats (AND)
-
         if (firstName != null && !firstName.isEmpty()) {
             predicate = cb.and(predicate, cb.equal(root.get("firstName"), firstName));
         }
@@ -73,12 +73,17 @@ public class EmployeeService {
         }
         cq.where(predicate);
         return entityManager.createQuery(cq).getResultList();
+    }*/
+    public List<Employee> filterEmployee(String firstName, String lastName, String function) {
+        return employeeRepository.filterEmployees(firstName, lastName, function);
     }
 
     public List<Employee> filterEmployeesByDateRange(Date date) {
         return employeeRepository.filterEmployeesByDate(date);
     }
-
+    public List<Employee> filterBySex(Employee.Sex sex){
+        return employeeRepository.filterEmployeeBySex(sex);
+    }
 }
 
 
