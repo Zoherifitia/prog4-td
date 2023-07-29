@@ -4,8 +4,12 @@ import com.example.employee.controller.mapper.EmployeeMapper;
 import com.example.employee.controller.response.CreateEmployeeResponse;
 import com.example.employee.controller.response.EmployeeResponse;
 import com.example.employee.controller.response.UpdateEmployeeResponse;
-import com.example.employee.modele.*;
+import com.example.employee.modele.Address;
+import com.example.employee.modele.CIN;
+import com.example.employee.modele.Email;
+import com.example.employee.modele.Employee;
 import com.example.employee.service.EmployeeService;
+import jakarta.servlet.http.HttpServletResponse;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -15,12 +19,14 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import org.supercsv.io.CsvBeanWriter;
+import org.supercsv.io.ICsvBeanWriter;
+import org.supercsv.prefs.CsvPreference;
 
 import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
-import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -52,7 +58,7 @@ public class EmployeeController {
                 Employee.Sex sex = Employee.Sex.valueOf(sexStr);
                 employees = employeeService.filterBySex(sex,order).stream().map(employeeMapper::toRest).toList();
             } else {
-                // Sinon, effectuez le filtrage des employés avec les autres paramètres fournis.
+                // effectuez le filtrage des employés avec les autres paramètres fournis.
                 employees = employeeService.filterEmployee(firstName, lastName, function,order).stream().map(employeeMapper::toRest).toList();
             }
         }
@@ -61,52 +67,9 @@ public class EmployeeController {
         return "employees";
     }
 
-    //vérifier si tous les paramètres de filtrage sont vides
     private boolean isEmpty(String firstName, String lastName, String sexStr, String function, String dateStr) {
         return firstName == null && lastName == null && sexStr == null && function == null && dateStr == null;
     }
-
-    /*@GetMapping("/employees")
-    public String getAll(
-            @RequestParam(required = false) String firstName,
-            @RequestParam(required = false) String lastName,
-            @RequestParam(required = false) Employee.Sex sex,
-            @RequestParam(required = false) String function,
-            @RequestParam(required = false) String dateStr,
-            Model model) throws ParseException {
-
-        List<EmployeeResponse> employees;
-
-        if (isEmpty(firstName, lastName, sex, function, dateStr)) {
-            employees = employeeService.getEmployee().stream()
-                    .map(employeeMapper::toRest)
-                    .toList();
-        } else {
-            if (dateStr != null && !dateStr.isEmpty()) {
-                // Filtrez par date d'embauche ou de départ.
-                SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-                Date date = dateFormat.parse(dateStr);
-                employees = employeeService.filterEmployeesByDateRange(date).stream()
-                        .map(employeeMapper::toRest)
-                        .toList();
-            } else {
-                // Sinon, effectuez le filtrage des employés avec les autres paramètres fournis.
-                employees = employeeService.filterEmployee(firstName, lastName, sex, function).stream()
-                        .map(employeeMapper::toRest)
-                        .toList();
-            }
-        }
-
-        model.addAttribute("employees", employees);
-        return "employees";
-    }
-
-    // Vérifier si tous les paramètres de filtrage sont vides
-    private boolean isEmpty(String firstName, String lastName, Employee.Sex sex, String function, String dateStr) {
-        return firstName == null && lastName == null && sex == null && function == null && dateStr == null;
-    }*/
-
-
 
     @GetMapping("/save-employee")
     public String getEmployee(Model model){
@@ -151,13 +114,13 @@ public class EmployeeController {
     public String getEmployeeDetails(@PathVariable Integer id, Model model) {
         Employee employee = employeeService.getEmployeeById(id);
         if (employee.getCin() == null) {
-            employee.setCin(new CIN()); // Créer un nouvel objet Cin s'il est nul
+            employee.setCin(new CIN());
         }
         if (employee.getAddress() == null) {
-            employee.setAddress(new Address()); // Créer un nouvel objet Address s'il est nul
+            employee.setAddress(new Address());
         }
         if (employee.getEmail() == null) {
-            employee.setEmail(new Email()); // Créer un nouvel objet Email s'il est nul
+            employee.setEmail(new Email());
         }
         model.addAttribute("employee", employee);
         return "ficheEmployee";
@@ -186,7 +149,7 @@ public class EmployeeController {
     @GetMapping("/employee/search")
     public String showSearchForm(Model model) {
         model.addAttribute("employeeSearch", new Employee()); // Créez une nouvelle instance d'Employee pour le formulaire
-        return "search"; // Renvoie la page du formulaire de recherche
+        return "search";
     }
 
     @PostMapping("/employee/search")
@@ -196,17 +159,48 @@ public class EmployeeController {
         return "search"; // Renvoie la page de résultat de la recherche
     }
 
-    //filtre
-    /*@GetMapping("/employee/filter")
-    public String showFilterForm(Model model) {
-        model.addAttribute("employeeFilter", new EmployeeFilter());
-        return "filter";
-    }
+    @GetMapping("/employee/export")
+    public void export(HttpServletResponse response,
+                       @RequestParam(required = false) String firstName,
+                       @RequestParam(required = false) String lastName,
+                       @RequestParam(required = false) String sexStr,
+                       @RequestParam(required = false) String function,
+                       @RequestParam(required = false) String dateStr,
+                       @RequestParam(required = false) String order) throws Exception{
+        response.setContentType("text/csv");
+        String fileName= "employee.csv";
+        String headerKey = "Content-Disposition";
+        String headerValue = "attachment; filename=" + fileName;
 
-    @PostMapping("/employee/filter")
-    public String filter(@ModelAttribute("employeeFilter") EmployeeFilter employeeFilter, Model model) {
-        List<Employee> filteredEmployees = employeeService.getEmployeesByFilter(employeeFilter);
-        model.addAttribute("employees", filteredEmployees);
-        return "filter";
-    }*/
+        response.setHeader(headerKey,headerValue);
+        List<EmployeeResponse> employees;
+        if (isEmpty(firstName, lastName, sexStr, function, dateStr)) {
+            employees = employeeService.getEmployee().stream().map(employeeMapper::toRest).toList();
+        } else {
+            if (dateStr != null && !dateStr.isEmpty()) {
+                //filtrez par date d'embauche ou de départ.
+                SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+                Date date = dateFormat.parse(dateStr);
+                employees = employeeService.filterEmployeesByDateRange(date,order).stream().map(employeeMapper::toRest).toList();
+            } else if (sexStr !=null && !sexStr.isEmpty()) {
+                Employee.Sex sex = Employee.Sex.valueOf(sexStr);
+                employees = employeeService.filterBySex(sex,order).stream().map(employeeMapper::toRest).toList();
+            } else {
+                // effectuez le filtrage des employés avec les autres paramètres fournis.
+                employees = employeeService.filterEmployee(firstName, lastName, function,order).stream().map(employeeMapper::toRest).toList();
+            }
+        }
+
+        //List<EmployeeResponse> employeeResponseList= employeeService.getEmployee().stream().map(employeeMapper::toRest).toList();
+
+        ICsvBeanWriter csvWriter = new CsvBeanWriter(response.getWriter(), CsvPreference.STANDARD_PREFERENCE);
+        String[] csvHeader = {"Matricule", "First Name", "Last Name", "Sex", "Birth date","Function"};
+        String[] nameMapping = {"matricule","firstName","lastName","sex","birthDate","function"};
+
+        csvWriter.writeHeader(csvHeader);
+        for (EmployeeResponse employee : employees){
+            csvWriter.write(employee, nameMapping);
+        }
+        csvWriter.close();
+    }
 }

@@ -36,6 +36,7 @@
 
     <button type="submit">Filter</button>
 </form>
+<a th:href="@{/employee/export(firstName=${firstName}, lastName=${lastName}, sexStr=${sex}, function=${function}, dateStr=${dateStr}, order=${order})}" class="btn btn-primary">Exporter en CSV</a>
 <table>
     <thead>
     <tr>
@@ -53,9 +54,21 @@
         <td th:text="${employee.birthDate}"/>
         <td th:text="${employee.sex}"/>
         <td th:text="${employee.function}" />
+        <td>
+            <span th:each="phone : ${employee.phone}">
+                Phone : <span th:utext="${phone.phoneNumber}"></span><br/>
+            </span>
+        </td>
     </tr>
     </tbody>
 </table>
+<div>
+    <h1 th:text="'Nom de l\'entreprise : ' + ${#strings.escapeXml(@environment.getProperty('company.name'))}">Nom de l'entreprise par défaut</h1>
+
+    <!-- Afficher le logo de l'entreprise -->
+    <img th:src="${@environment.getProperty('company.logo')}" alt="Logo de l'entreprise">
+    <p th:text="${#strings.escapeXml(@environment.getProperty('company.logo'))}"></p>
+</div>
 <a href="/save-employee" class="btn btn-primary">Créer un employé</a>
 </body>
 </html>

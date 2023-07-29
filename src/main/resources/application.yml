@@ -1,0 +1,11 @@
+company:
+  name: Mon Entreprise
+  description: Description de mon entreprise
+  slogan: Le slogan de mon entreprise
+  address: Adresse exacte de mon entreprise
+  email: contact@monentreprise.com
+  phones: 0123456789,9876543210
+  nif: 12345678X
+  stat: 98765432A
+  rcs: 56789123B
+  logo: /static/image/image1.png
